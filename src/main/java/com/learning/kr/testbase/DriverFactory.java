@@ -1,4 +1,4 @@
-package com.learming.kr.testbase;
+package com.learning.kr.testbase;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

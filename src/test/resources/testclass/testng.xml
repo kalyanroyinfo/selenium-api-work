@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="automationTest" verbose="1" parallel="tests" thread-count="3">
     <listeners>
-        <listener class-name="com.learming.kr.listeners.TestListener"/>
+        <listener class-name="com.learning.kr.listeners.TestListener"/>
     </listeners>
 
     <test name="Learning-Testes">
@@ -12,7 +12,7 @@
             </run>
         </groups>
         <classes>
-            <class name="com.learming.kr.testclasses.TestNgCalling"/>
+            <class name="com.learning.kr.testclasses.TestNgCalling"/>
         </classes>
     </test>
 </suite>

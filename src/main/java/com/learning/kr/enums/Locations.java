@@ -1,4 +1,4 @@
-package com.learming.kr.enums;
+package com.learning.kr.enums;
 
 /**
  * Created by pk on 16/09/21.

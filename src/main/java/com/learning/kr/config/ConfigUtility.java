@@ -1,6 +1,6 @@
-package com.learming.kr.config;
+package com.learning.kr.config;
 
-import com.learming.kr.enums.Locations;
+import com.learning.kr.enums.Locations;
 
 /**
  * Created by pk on 16/09/21.

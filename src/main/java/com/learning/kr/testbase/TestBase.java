@@ -1,22 +1,26 @@
-package com.learming.kr.testbase;
+package com.learning.kr.testbase;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-import org.openqa.selenium.ElementNotVisibleException;
-import org.openqa.selenium.NotFoundException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
+import java.util.NoSuchElementException;
 
 public class TestBase {
     FileInputStream fis;
@@ -27,7 +31,7 @@ public class TestBase {
     public static ExtentTest logger;
     static String basepath=System.getProperty("user.dir")+"/src/test/resources/reports/";
     static String reportpath=basepath+"/ExtentReportResults.html";
-    String screenshotpath=basepath+"/screenshot";
+    static String screenshotpath=basepath+"/screenshot";
 
 
     public void setupMethod(){
@@ -44,7 +48,7 @@ public class TestBase {
     private static ThreadLocal<FluentWait<WebDriver>> waitThread = new ThreadLocal<>();
 
     @BeforeSuite
-    public static void initialiseDiver(){
+    public static void initialise(){
         driverFactoryThreadLocal=ThreadLocal.withInitial(()->{
             DriverFactory df=new DriverFactory();
             webdriverthreadpool.add(df);
@@ -61,10 +65,30 @@ public class TestBase {
         htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
         htmlReporter.config().setTheme(Theme.STANDARD);
 
+        //extent.loadConfig(new File(System.getProperty("user.dir")+"\\extent-config.xml"));
+
     }
 
     public WebDriver getDriver(String browser){
         return driverFactoryThreadLocal.get().getDriver(browser);
+    }
+
+    @AfterMethod
+    public void getResult(ITestResult result) throws Exception {
+        if(result.getStatus() == ITestResult.FAILURE){
+            logger.log(Status.FAIL, "Test Case Failed is "+result.getName());
+            logger.log(Status.FAIL, "Test Case Failed is "+result.getThrowable());
+            //To capture screenshot path and store the path of the screenshot in the string "screenshotPath"
+            //We do pass the path captured by this mehtod in to the extent reports using "logger.addScreenCapture" method.
+            String screenshotPath = getScreenhot(result.getName());
+            //To add it in the extent report
+            logger.log(Status.FAIL, String.valueOf(logger.addScreencastFromPath(screenshotPath)));
+        } else if(result.getStatus() == ITestResult.SKIP){
+            logger.log(Status.SKIP, "Test Case Skipped is "+result.getName());
+        }
+        // ending test
+        //endTest(logger) : It ends the current test and prepares to create HTML report
+//        extent.removeTest(logger);
     }
 
     @AfterSuite
@@ -97,14 +121,24 @@ public class TestBase {
         return waitThread.get();
     }
 
-    public WebElement visibilityOf(WebElement element,WebDriver driver) {
+    public void waitForElement(By path,WebDriver driver) {
         try {
             System.out.println("In wait");
-            getWaitThread(driver).until(ExpectedConditions.visibilityOf(element));
+            getWaitThread(driver).until(ExpectedConditions.visibilityOfElementLocated(path));
+            getWaitThread(driver).until(ExpectedConditions.elementToBeClickable(path));
             System.out.println("Exit wait");
         } catch (Exception e){
             e.printStackTrace();
         }
-        return element;
+    }
+
+
+    public static String getScreenhot( String screenshotName) throws Exception {
+        String dateName = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
+        TakesScreenshot ts = (TakesScreenshot) driverFactoryThreadLocal.get().driver;
+        File source = ts.getScreenshotAs(OutputType.FILE);
+        File finalDestination = new File(screenshotpath);
+        FileUtils.copyFile(source, finalDestination);
+        return screenshotpath;
     }
 }

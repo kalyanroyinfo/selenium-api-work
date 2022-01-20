@@ -1,4 +1,4 @@
-package com.learming.kr.utility;
+package com.learning.kr.utility;
 
 import io.restassured.http.Method;
 import io.restassured.response.Response;
