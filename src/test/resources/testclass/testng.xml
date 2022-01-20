@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="automationTest" verbose="1" parallel="tests" thread-count="3">
+    <listeners>
+        <listener class-name="com.learming.kr.listeners.TestListener"/>
+    </listeners>
+
+    <test name="Learning-Testes">
+        <groups>
+            <run>
+                <include name="compare-temparature"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.learming.kr.testclasses.TestNgCalling"/>
+        </classes>
+    </test>
+</suite>

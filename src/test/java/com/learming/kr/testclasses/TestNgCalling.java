@@ -1,5 +1,8 @@
 package com.learming.kr.testclasses;
 
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.learming.kr.exception.TemparatureDiffException;
 import com.learming.kr.testbase.TestBase;
 import com.learming.kr.utility.RestAPIRequestBuilder;
@@ -24,12 +27,15 @@ public class TestNgCalling extends TestBase
 
 	RestAPIRequestBuilder restAPIRequestBuilder = RestAPIRequestBuilder.getInstance();
 
-	@Test
+
+	@Test(groups = {"compare-temparature"})
 	public void compareTemparature() throws InterruptedException {
+		logger = extent.createTest("passTest");
 		setupMethod();
-		WebDriver driver=getDriver("firefox");
+		WebDriver driver=getDriver("chrome");
 		navigate(Config.getProperty("testsiteurl"),driver);
 		WebElement ele=driver.findElement(By.xpath("//input[@name='query']"));
+		visibilityOf(ele,driver);
 		ele.sendKeys("Kolkata");
 		ele.sendKeys(Keys.ARROW_DOWN);
 		ele.sendKeys(Keys.ENTER);
@@ -65,11 +71,13 @@ public class TestNgCalling extends TestBase
 
 		if(diff>=2){
 			try {
+				logger.log(Status.FAIL, MarkupHelper.createLabel("Temparature diff is greature than 2°", ExtentColor.RED));
 				throw new TemparatureDiffException("Temparature diff is greature than 2° ");
 			} catch (TemparatureDiffException e) {
 				e.printStackTrace();
 			}
 		}else{
+			logger.log(Status.PASS, MarkupHelper.createLabel("Temparature diff is within 2° C", ExtentColor.RED));
 			System.out.println("Success");
 		}
 
