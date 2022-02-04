@@ -7,8 +7,6 @@ import org.testng.annotations.Test;
 
 
 /*
-Preetam--9007285004
-
 String = "aahtt1296fftbbgst783drr!4@@5"
 output =123456789
  */
