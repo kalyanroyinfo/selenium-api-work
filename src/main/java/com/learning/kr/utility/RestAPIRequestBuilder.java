@@ -16,7 +16,7 @@ public class RestAPIRequestBuilder
 		return RestAPIRequestBuilderModule.instance;
 	}
 
-    public Response hitAPI(String baseUri,RequestSpecification specification,Method requestType, String url, String testdata,Map<String,String> header,Map<String,String> params, boolean isPathParam){
+    public Response   hitAPI(String baseUri,RequestSpecification specification,Method requestType, String url, String testdata,Map<String,String> header,Map<String,String> params, boolean isPathParam){
         Response res = null;
         specification.baseUri(baseUri);
 		specification = addJsonBody(specification, testdata);
