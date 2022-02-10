@@ -22,11 +22,11 @@ public static void main(String args[]){
 
 	StringExample obj = new StringExample();
 
-//	String str = "Geeks for Geeks";
-//	obj.reverse(str);
+	String str = "Geeks for Geeks";
+	obj.reverse(str);
 
-	String resultantSting1 = obj.reverseString("JAVATPOINT");
-	System.out.println(resultantSting1);
+//	String resultantSting1 = obj.reverseString("JAVATPOINT");
+//	System.out.println(resultantSting1);
 
 }
 
