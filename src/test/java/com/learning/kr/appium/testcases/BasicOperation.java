@@ -1,9 +1,10 @@
 package com.learning.kr.appium.testcases;
 
+import com.learning.kr.appium.capabilities.TestBase;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import org.openqa.selenium.By;
-import se.seamless.aqa.appium.capabilities.TestBase;
+
 
 /**
  * Created by kalyanroy on 13/11/20.

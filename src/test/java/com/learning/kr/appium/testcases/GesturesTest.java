@@ -1,5 +1,6 @@
 package com.learning.kr.appium.testcases;
 
+import com.learning.kr.appium.capabilities.TestBase;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -8,7 +9,6 @@ import io.appium.java_client.touch.TapOptions;
 import io.appium.java_client.touch.offset.ElementOption;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import se.seamless.aqa.appium.capabilities.TestBase;
 import static io.appium.java_client.touch.LongPressOptions.longPressOptions;
 import static io.appium.java_client.touch.offset.ElementOption.element;
 import static java.time.Duration.ofSeconds;

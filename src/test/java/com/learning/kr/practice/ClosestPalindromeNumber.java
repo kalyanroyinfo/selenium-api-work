@@ -62,5 +62,3 @@ class ClosestPalindromeNumber {
         closestPalindrome(n);
     }
 }
-
-// This code is contributed by kes333hav
